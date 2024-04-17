@@ -17,7 +17,7 @@ class AddTodoDialog extends StatelessWidget {
 
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      title: const Text('Add Todo'),
+      title: Text('${text == null ? 'Add' : 'Update'} Todo'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
