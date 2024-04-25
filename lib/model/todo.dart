@@ -1,3 +1,4 @@
+import 'package:todo_app/utils.dart';
 import 'package:uuid/uuid.dart';
 
 class Todo {
@@ -6,6 +7,11 @@ class Todo {
   final String id;
   String task;
   bool status;
+  Priority priority;
 
-  Todo(this.task, {this.status = false}) : id = uuid.v4();
+  Todo(
+    this.task, {
+    this.status = false,
+    this.priority = Priority.low,
+  }) : id = uuid.v4();
 }

@@ -4,12 +4,7 @@ import 'package:todo_app/components/add_todo_dialog.dart';
 import 'package:todo_app/components/todo_list.dart';
 import 'package:todo_app/model/todo.dart';
 import 'package:todo_app/providers/theme_provider.dart';
-
-enum Filter {
-  all,
-  pending,
-  completed,
-}
+import 'package:todo_app/utils.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,10 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _todos = [
-    Todo('Task 1'),
-    Todo('Task 2', status: true),
-  ];
+  final _todos = initialTodos;
 
   Filter _filter = Filter.all;
 
@@ -45,14 +37,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _addTodo() async {
-    String? text = await showDialog<String>(
+    Todo? todo = await showDialog<Todo>(
       context: context,
       builder: (context) => const AddTodoDialog(),
     );
 
-    if (text != null && text.isNotEmpty) {
+    if (todo != null && todo.task.isNotEmpty) {
       setState(() {
-        _todos.add(Todo(text));
+        _todos.add(todo);
       });
     }
   }

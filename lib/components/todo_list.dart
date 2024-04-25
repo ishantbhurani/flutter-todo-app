@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/components/add_todo_dialog.dart';
 import 'package:todo_app/model/todo.dart';
-import 'package:todo_app/pages/home_page.dart';
+import 'package:todo_app/utils.dart';
 
 class TodoList extends StatelessWidget {
   final List<Todo> todos;
@@ -26,13 +26,13 @@ class TodoList extends StatelessWidget {
     };
 
     Future<void> onPressed(Todo todo) async {
-      String? text = await showDialog<String>(
+      Todo? updatedTodo = await showDialog<Todo>(
         context: context,
-        builder: (context) => AddTodoDialog(text: todo.task),
+        builder: (context) => AddTodoDialog(todo: todo),
       );
 
-      if (text != null && text.isNotEmpty) {
-        todo.task = text;
+      if (updatedTodo != null && updatedTodo.task.isNotEmpty) {
+        todo.task = updatedTodo.task;
 
         onChanged(todo);
       }
@@ -54,13 +54,26 @@ class TodoList extends StatelessWidget {
                   onChanged(todo);
                 }
               },
-              title: Text(
-                todo.task,
-                style: TextStyle(
-                  decoration: todo.status
-                      ? TextDecoration.lineThrough
-                      : TextDecoration.none,
-                ),
+              title: Row(
+                children: [
+                  Container(
+                    width: 8.0,
+                    height: 8.0,
+                    decoration: BoxDecoration(
+                      color: getPriorityColor(todo.priority),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  const SizedBox(width: 8.0),
+                  Text(
+                    todo.task,
+                    style: TextStyle(
+                      decoration: todo.status
+                          ? TextDecoration.lineThrough
+                          : TextDecoration.none,
+                    ),
+                  ),
+                ],
               ),
               controlAffinity: ListTileControlAffinity.leading,
               secondary: Row(
