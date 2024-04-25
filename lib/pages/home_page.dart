@@ -5,6 +5,12 @@ import 'package:todo_app/components/todo_list.dart';
 import 'package:todo_app/model/todo.dart';
 import 'package:todo_app/providers/theme_provider.dart';
 
+enum Filter {
+  all,
+  pending,
+  completed,
+}
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -18,10 +24,24 @@ class _HomePageState extends State<HomePage> {
     Todo('Task 2', status: true),
   ];
 
-  void _updateTask(int index, Todo task) {
+  Filter _filter = Filter.all;
+
+  void _updateFilter(Filter filter) {
     setState(() {
-      _todos[index] = task;
+      _filter = filter;
     });
+  }
+
+  void _updateTask(Todo updatedTodo) {
+    for (final todo in _todos) {
+      if (todo.id == updatedTodo.id) {
+        setState(() {
+          todo.task = updatedTodo.task;
+          todo.status = updatedTodo.status;
+        });
+        break;
+      }
+    }
   }
 
   Future<void> _addTodo() async {
@@ -37,9 +57,9 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _deleteTodo(int index) {
+  void _deleteTodo(Todo todo) {
     setState(() {
-      _todos.removeAt(index);
+      _todos.removeWhere((t) => t.id == todo.id);
     });
   }
 
@@ -53,6 +73,18 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text(title),
         actions: [
+          PopupMenuButton(
+            icon: const Icon(Icons.filter_list),
+            onSelected: _updateFilter,
+            itemBuilder: (context) => Filter.values
+                .map(
+                  (filter) => PopupMenuItem(
+                    value: filter,
+                    child: Text(filter.name.toUpperCase()),
+                  ),
+                )
+                .toList(),
+          ),
           IconButton(
             onPressed: themeProvider.toggleTheme,
             icon: themeProvider.isDarkMode()
@@ -64,6 +96,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: TodoList(
         todos: _todos,
+        filter: _filter,
         onChanged: _updateTask,
         onDelete: _deleteTodo,
       ),
