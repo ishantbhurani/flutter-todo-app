@@ -10,3 +10,9 @@ enum Filter {
   pending,
   completed,
 }
+
+enum Priority {
+  low,
+  medium,
+  high,
+}
