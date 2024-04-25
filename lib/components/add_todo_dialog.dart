@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/components/add_todo_dialog_button.dart';
 import 'package:todo_app/components/add_todo_dialog_text_field.dart';
+import 'package:todo_app/model/todo.dart';
 import 'package:todo_app/utils.dart';
 
 class AddTodoDialog extends StatefulWidget {
-  final String? text;
+  final Todo? todo;
 
-  const AddTodoDialog({super.key, this.text});
+  const AddTodoDialog({super.key, this.todo});
 
   @override
   State<AddTodoDialog> createState() => _AddTodoDialogState();
 }
 
 class _AddTodoDialogState extends State<AddTodoDialog> {
-  Priority _priority = Priority.low;
+  late final TextEditingController _controller;
+  late Priority _priority;
 
   void _updatedPriority(Priority? priority) {
     if (priority != null) {
@@ -24,23 +26,36 @@ class _AddTodoDialogState extends State<AddTodoDialog> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final TextEditingController controller =
-        TextEditingController(text: widget.text);
+  void initState() {
+    super.initState();
 
-    void onSubmit() {
-      Navigator.pop(context, controller.text);
+    _controller = TextEditingController(text: widget.todo?.task);
+    _priority = widget.todo?.priority ?? Priority.low;
+  }
+
+  void onSubmit() {
+    Todo todo;
+    if (widget.todo == null) {
+      todo = Todo(_controller.text, priority: _priority);
+    } else {
+      todo = widget.todo!;
+      todo.task = _controller.text;
+      todo.priority = _priority;
     }
+    Navigator.pop<Todo>(context, todo);
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      title: Text('${widget.text == null ? 'Add' : 'Update'} Todo'),
+      title: Text('${widget.todo == null ? 'Add' : 'Update'} Todo'),
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           AddTodoDialogTextField(
-            controller: controller,
+            controller: _controller,
             onSubmitted: onSubmit,
           ),
           const SizedBox(height: 16),

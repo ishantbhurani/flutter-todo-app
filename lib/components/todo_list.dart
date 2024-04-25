@@ -26,13 +26,13 @@ class TodoList extends StatelessWidget {
     };
 
     Future<void> onPressed(Todo todo) async {
-      String? text = await showDialog<String>(
+      Todo? updatedTodo = await showDialog<Todo>(
         context: context,
-        builder: (context) => AddTodoDialog(text: todo.task),
+        builder: (context) => AddTodoDialog(todo: todo),
       );
 
-      if (text != null && text.isNotEmpty) {
-        todo.task = text;
+      if (updatedTodo != null && updatedTodo.task.isNotEmpty) {
+        todo.task = updatedTodo.task;
 
         onChanged(todo);
       }

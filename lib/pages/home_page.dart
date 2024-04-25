@@ -37,14 +37,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _addTodo() async {
-    String? text = await showDialog<String>(
+    Todo? todo = await showDialog<Todo>(
       context: context,
       builder: (context) => const AddTodoDialog(),
     );
 
-    if (text != null && text.isNotEmpty) {
+    if (todo != null && todo.task.isNotEmpty) {
       setState(() {
-        _todos.add(Todo(text));
+        _todos.add(todo);
       });
     }
   }
