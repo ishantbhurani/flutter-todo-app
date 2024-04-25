@@ -1,31 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/components/add_todo_dialog.dart';
 import 'package:todo_app/model/todo.dart';
+import 'package:todo_app/pages/home_page.dart';
 
 class TodoList extends StatelessWidget {
   final List<Todo> todos;
-  final void Function(int, Todo) onChanged;
-  final void Function(int) onDelete;
+  final Filter filter;
+  final void Function(Todo) onChanged;
+  final void Function(Todo) onDelete;
 
   const TodoList({
     super.key,
     required this.todos,
+    required this.filter,
     required this.onChanged,
     required this.onDelete,
   });
 
   @override
   Widget build(BuildContext context) {
-    Future<void> onPressed(int index, ({bool status, String text}) task) async {
+    final filteredTodos = switch (filter) {
+      Filter.pending => todos.where((todo) => !todo.status).toList(),
+      Filter.completed => todos.where((todo) => todo.status).toList(),
+      _ => todos,
+    };
+
+    Future<void> onPressed(Todo todo) async {
       String? text = await showDialog<String>(
         context: context,
-        builder: (context) => AddTodoDialog(text: task.text),
+        builder: (context) => AddTodoDialog(text: todo.task),
       );
 
       if (text != null && text.isNotEmpty) {
-        final newTask = Todo(text, status: task.status);
+        todo.task = text;
 
-        onChanged(index, newTask);
+        onChanged(todo);
       }
     }
 
@@ -33,16 +42,16 @@ class TodoList extends StatelessWidget {
       child: SizedBox(
         width: 800,
         child: ListView.builder(
-          itemCount: todos.length,
+          itemCount: filteredTodos.length,
           itemBuilder: (context, index) {
-            final todo = todos[index];
+            final todo = filteredTodos[index];
 
             return CheckboxListTile(
               value: todo.status,
               onChanged: (status) {
                 if (status != null) {
                   todo.status = status;
-                  onChanged(index, todo);
+                  onChanged(todo);
                 }
               },
               title: Text(
@@ -58,11 +67,10 @@ class TodoList extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                      onPressed: () => onPressed(
-                          index, (text: todo.task, status: todo.status)),
+                      onPressed: () => onPressed(todo),
                       icon: const Icon(Icons.edit)),
                   IconButton(
-                      onPressed: () => onDelete(index),
+                      onPressed: () => onDelete(todo),
                       icon: const Icon(
                         Icons.delete,
                         color: Colors.red,
