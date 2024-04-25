@@ -39,61 +39,66 @@ class TodoList extends StatelessWidget {
     }
 
     return Center(
-      child: SizedBox(
-        width: 800,
-        child: ListView.builder(
-          itemCount: filteredTodos.length,
-          itemBuilder: (context, index) {
-            final todo = filteredTodos[index];
+      child: filteredTodos.isEmpty
+          ? const Text(
+              'Nothing here yet! 🎯',
+              style: TextStyle(fontSize: 20),
+            )
+          : SizedBox(
+              width: 800,
+              child: ListView.builder(
+                itemCount: filteredTodos.length,
+                itemBuilder: (context, index) {
+                  final todo = filteredTodos[index];
 
-            return CheckboxListTile(
-              value: todo.status,
-              onChanged: (status) {
-                if (status != null) {
-                  todo.status = status;
-                  onChanged(todo);
-                }
-              },
-              title: Row(
-                children: [
-                  Container(
-                    width: 8.0,
-                    height: 8.0,
-                    decoration: BoxDecoration(
-                      color: getPriorityColor(todo.priority),
-                      borderRadius: BorderRadius.circular(12),
+                  return CheckboxListTile(
+                    value: todo.status,
+                    onChanged: (status) {
+                      if (status != null) {
+                        todo.status = status;
+                        onChanged(todo);
+                      }
+                    },
+                    title: Row(
+                      children: [
+                        Container(
+                          width: 8.0,
+                          height: 8.0,
+                          decoration: BoxDecoration(
+                            color: getPriorityColor(todo.priority),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        const SizedBox(width: 8.0),
+                        Text(
+                          todo.task,
+                          style: TextStyle(
+                            decoration: todo.status
+                                ? TextDecoration.lineThrough
+                                : TextDecoration.none,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  const SizedBox(width: 8.0),
-                  Text(
-                    todo.task,
-                    style: TextStyle(
-                      decoration: todo.status
-                          ? TextDecoration.lineThrough
-                          : TextDecoration.none,
+                    controlAffinity: ListTileControlAffinity.leading,
+                    secondary: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                            onPressed: () => onPressed(todo),
+                            icon: const Icon(Icons.edit)),
+                        IconButton(
+                            onPressed: () => onDelete(todo),
+                            icon: const Icon(
+                              Icons.delete,
+                              color: Colors.red,
+                            )),
+                      ],
                     ),
-                  ),
-                ],
+                  );
+                },
               ),
-              controlAffinity: ListTileControlAffinity.leading,
-              secondary: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                      onPressed: () => onPressed(todo),
-                      icon: const Icon(Icons.edit)),
-                  IconButton(
-                      onPressed: () => onDelete(todo),
-                      icon: const Icon(
-                        Icons.delete,
-                        color: Colors.red,
-                      )),
-                ],
-              ),
-            );
-          },
-        ),
-      ),
+            ),
     );
   }
 }
