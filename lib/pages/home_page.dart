@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/components/add_todo_dialog.dart';
 import 'package:todo_app/components/todo_list.dart';
+import 'package:todo_app/providers/theme_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -43,11 +45,21 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     const title = 'Todo App';
+    final themeProvider = Provider.of<ThemeProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text(title),
+        actions: [
+          IconButton(
+            onPressed: themeProvider.toggleTheme,
+            icon: themeProvider.isDarkMode()
+                ? const Icon(Icons.light_mode)
+                : const Icon(Icons.dark_mode),
+            tooltip: 'Toggle theme',
+          )
+        ],
       ),
       body: TodoList(
         todos: _todos,
