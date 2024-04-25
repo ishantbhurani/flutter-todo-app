@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/components/add_todo_dialog.dart';
 import 'package:todo_app/components/todo_list.dart';
+import 'package:todo_app/model/todo.dart';
 import 'package:todo_app/providers/theme_provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,11 +14,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _todos = [
-    (text: 'Task 1', status: false),
-    (text: 'Task 2', status: true),
+    Todo('Task 1'),
+    Todo('Task 2', status: true),
   ];
 
-  void _updateTask(int index, ({bool status, String text}) task) {
+  void _updateTask(int index, Todo task) {
     setState(() {
       _todos[index] = task;
     });
@@ -31,7 +32,7 @@ class _HomePageState extends State<HomePage> {
 
     if (text != null && text.isNotEmpty) {
       setState(() {
-        _todos.add((text: text, status: false));
+        _todos.add(Todo(text));
       });
     }
   }

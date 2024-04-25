@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/components/add_todo_dialog.dart';
+import 'package:todo_app/model/todo.dart';
 
 class TodoList extends StatelessWidget {
-  final List<({bool status, String text})> todos;
-  final void Function(int, ({bool status, String text})) onChanged;
+  final List<Todo> todos;
+  final void Function(int, Todo) onChanged;
   final void Function(int) onDelete;
 
   const TodoList({
@@ -22,7 +23,7 @@ class TodoList extends StatelessWidget {
       );
 
       if (text != null && text.isNotEmpty) {
-        final newTask = (text: text, status: task.status);
+        final newTask = Todo(text, status: task.status);
 
         onChanged(index, newTask);
       }
@@ -34,17 +35,22 @@ class TodoList extends StatelessWidget {
         child: ListView.builder(
           itemCount: todos.length,
           itemBuilder: (context, index) {
-            final (:status, :text) = todos[index];
+            final todo = todos[index];
 
             return CheckboxListTile(
-              value: status,
-              onChanged: (status) =>
-                  onChanged(index, (text: text, status: status ?? false)),
+              value: todo.status,
+              onChanged: (status) {
+                if (status != null) {
+                  todo.status = status;
+                  onChanged(index, todo);
+                }
+              },
               title: Text(
-                text,
+                todo.task,
                 style: TextStyle(
-                  decoration:
-                      status ? TextDecoration.lineThrough : TextDecoration.none,
+                  decoration: todo.status
+                      ? TextDecoration.lineThrough
+                      : TextDecoration.none,
                 ),
               ),
               controlAffinity: ListTileControlAffinity.leading,
@@ -52,8 +58,8 @@ class TodoList extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   IconButton(
-                      onPressed: () =>
-                          onPressed(index, (text: text, status: status)),
+                      onPressed: () => onPressed(
+                          index, (text: todo.task, status: todo.status)),
                       icon: const Icon(Icons.edit)),
                   IconButton(
                       onPressed: () => onDelete(index),
