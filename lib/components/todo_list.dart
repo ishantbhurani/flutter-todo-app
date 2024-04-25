@@ -54,13 +54,26 @@ class TodoList extends StatelessWidget {
                   onChanged(todo);
                 }
               },
-              title: Text(
-                todo.task,
-                style: TextStyle(
-                  decoration: todo.status
-                      ? TextDecoration.lineThrough
-                      : TextDecoration.none,
-                ),
+              title: Row(
+                children: [
+                  Container(
+                    width: 8.0,
+                    height: 8.0,
+                    decoration: BoxDecoration(
+                      color: getPriorityColor(todo.priority),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  const SizedBox(width: 8.0),
+                  Text(
+                    todo.task,
+                    style: TextStyle(
+                      decoration: todo.status
+                          ? TextDecoration.lineThrough
+                          : TextDecoration.none,
+                    ),
+                  ),
+                ],
               ),
               controlAffinity: ListTileControlAffinity.leading,
               secondary: Row(
