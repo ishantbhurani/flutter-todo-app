@@ -19,4 +19,15 @@ class Todo {
     this.status = false,
     this.priority = Priority.low,
   });
+
+  Todo.clone(Todo t)
+      : id = t.id,
+        task = t.task,
+        status = t.status,
+        priority = t.priority;
+
+  @override
+  String toString() {
+    return 'Todo(id: $id, task: $task, status: $status, priority: $priority)';
+  }
 }
