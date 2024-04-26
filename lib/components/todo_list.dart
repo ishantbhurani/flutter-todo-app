@@ -70,12 +70,14 @@ class TodoList extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 8.0),
-                        Text(
-                          todo.task,
-                          style: TextStyle(
-                            decoration: todo.status
-                                ? TextDecoration.lineThrough
-                                : TextDecoration.none,
+                        Flexible(
+                          child: Text(
+                            todo.task,
+                            style: TextStyle(
+                              decoration: todo.status
+                                  ? TextDecoration.lineThrough
+                                  : TextDecoration.none,
+                            ),
                           ),
                         ),
                       ],
