@@ -32,9 +32,7 @@ class TodoList extends StatelessWidget {
       );
 
       if (updatedTodo != null && updatedTodo.task.isNotEmpty) {
-        todo.task = updatedTodo.task;
-
-        onChanged(todo);
+        onChanged(updatedTodo);
       }
     }
 

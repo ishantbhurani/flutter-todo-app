@@ -38,7 +38,7 @@ class _AddTodoDialogState extends State<AddTodoDialog> {
     if (widget.todo == null) {
       todo = Todo(_controller.text, priority: _priority);
     } else {
-      todo = widget.todo!;
+      todo = Todo.clone(widget.todo!);
       todo.task = _controller.text;
       todo.priority = _priority;
     }
