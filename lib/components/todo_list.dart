@@ -7,7 +7,7 @@ class TodoList extends StatelessWidget {
   final List<Todo> todos;
   final Filter filter;
   final void Function(Todo) onChanged;
-  final void Function(Todo) onDelete;
+  final void Function(int) onDelete;
 
   const TodoList({
     super.key,
@@ -32,9 +32,7 @@ class TodoList extends StatelessWidget {
       );
 
       if (updatedTodo != null && updatedTodo.task.isNotEmpty) {
-        todo.task = updatedTodo.task;
-
-        onChanged(todo);
+        onChanged(updatedTodo);
       }
     }
 
@@ -70,12 +68,14 @@ class TodoList extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 8.0),
-                        Text(
-                          todo.task,
-                          style: TextStyle(
-                            decoration: todo.status
-                                ? TextDecoration.lineThrough
-                                : TextDecoration.none,
+                        Flexible(
+                          child: Text(
+                            todo.task,
+                            style: TextStyle(
+                              decoration: todo.status
+                                  ? TextDecoration.lineThrough
+                                  : TextDecoration.none,
+                            ),
                           ),
                         ),
                       ],
@@ -88,7 +88,7 @@ class TodoList extends StatelessWidget {
                             onPressed: () => onPressed(todo),
                             icon: const Icon(Icons.edit)),
                         IconButton(
-                            onPressed: () => onDelete(todo),
+                            onPressed: () => onDelete(todo.id),
                             icon: const Icon(
                               Icons.delete,
                               color: Colors.red,

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/components/add_todo_dialog.dart';
 import 'package:todo_app/components/todo_list.dart';
 import 'package:todo_app/model/todo.dart';
+import 'package:todo_app/model/todo_service.dart';
 import 'package:todo_app/providers/theme_provider.dart';
 import 'package:todo_app/utils.dart';
 
@@ -14,7 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _todos = initialTodos;
+  final todoService = TodoService();
 
   Filter _filter = Filter.all;
 
@@ -25,15 +26,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _updateTask(Todo updatedTodo) {
-    for (final todo in _todos) {
-      if (todo.id == updatedTodo.id) {
-        setState(() {
-          todo.task = updatedTodo.task;
-          todo.status = updatedTodo.status;
-        });
-        break;
-      }
-    }
+    todoService.updateTodo(updatedTodo);
   }
 
   Future<void> _addTodo() async {
@@ -43,16 +36,12 @@ class _HomePageState extends State<HomePage> {
     );
 
     if (todo != null && todo.task.isNotEmpty) {
-      setState(() {
-        _todos.add(todo);
-      });
+      todoService.addTodo(todo);
     }
   }
 
-  void _deleteTodo(Todo todo) {
-    setState(() {
-      _todos.removeWhere((t) => t.id == todo.id);
-    });
+  void _deleteTodo(int id) {
+    todoService.deleteTodo(id);
   }
 
   @override
@@ -86,11 +75,20 @@ class _HomePageState extends State<HomePage> {
           )
         ],
       ),
-      body: TodoList(
-        todos: _todos,
-        filter: _filter,
-        onChanged: _updateTask,
-        onDelete: _deleteTodo,
+      body: StreamBuilder(
+        stream: todoService.streamTodos,
+        builder: (context, snapshot) {
+          List<Todo> todos = [];
+          if (snapshot.hasData) {
+            todos = snapshot.data!;
+          }
+          return TodoList(
+            todos: todos,
+            filter: _filter,
+            onChanged: _updateTask,
+            onDelete: _deleteTodo,
+          );
+        },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _addTodo,

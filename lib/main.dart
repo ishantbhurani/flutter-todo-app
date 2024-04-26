@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/model/todo_service.dart';
 import 'package:todo_app/pages/home_page.dart';
 import 'package:todo_app/providers/theme_provider.dart';
 
-void main() {
+void main() async {
+  await TodoService.init();
+
   runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeProvider(),

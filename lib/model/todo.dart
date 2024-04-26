@@ -1,17 +1,33 @@
+import 'package:isar/isar.dart';
 import 'package:todo_app/utils.dart';
-import 'package:uuid/uuid.dart';
 
+part 'todo.g.dart';
+
+@collection
 class Todo {
-  static const uuid = Uuid();
+  Id id = Isar.autoIncrement;
 
-  final String id;
   String task;
+
   bool status;
+
+  @enumerated
   Priority priority;
 
   Todo(
     this.task, {
     this.status = false,
     this.priority = Priority.low,
-  }) : id = uuid.v4();
+  });
+
+  Todo.clone(Todo t)
+      : id = t.id,
+        task = t.task,
+        status = t.status,
+        priority = t.priority;
+
+  @override
+  String toString() {
+    return 'Todo(id: $id, task: $task, status: $status, priority: $priority)';
+  }
 }
