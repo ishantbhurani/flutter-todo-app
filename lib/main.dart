@@ -7,6 +7,8 @@ import 'package:todo_app/providers/theme_provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await ThemeProvider.init();
+
   await TodoService.init();
 
   runApp(
