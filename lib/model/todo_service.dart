@@ -15,8 +15,11 @@ class TodoService {
   }
 
   // WATCH (READ)
-  Stream<List<Todo>> streamTodos =
-      isar.todos.where().watch(fireImmediately: true);
+  Stream<List<Todo>> streamTodos = isar.todos
+      .where(sort: Sort.desc)
+      .anyId()
+      .sortByPriorityDesc()
+      .watch(fireImmediately: true);
 
   // CREATE
   Future<void> addTodo(Todo newTodo) async {
