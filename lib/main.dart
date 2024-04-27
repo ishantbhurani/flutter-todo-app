@@ -5,6 +5,8 @@ import 'package:todo_app/pages/home_page.dart';
 import 'package:todo_app/providers/theme_provider.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   await TodoService.init();
 
   runApp(
