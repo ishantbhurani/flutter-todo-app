@@ -6,6 +6,7 @@ An elegant Todo App built with [Flutter](https://flutter.dev/). It supports dark
 
 - [Overview](#overview)
   - [Features](#features)
+  - [Screenshots](#screenshots)
 - [My process](#my-process)
   - [Built with](#built-with)
 - [Author](#author)
@@ -29,6 +30,20 @@ Users should be able to:
 - Filter by all/pending/completed todos
 - Toggle light and dark mode
 - Persist theme preferences
+
+### Screenshots
+
+| ![Mobile Add Todo](https://github.com/ishantbhurani/flutter-todo-app/assets/67356291/10d0fc05-e5d1-4f27-8e16-0f2af7b39e34) |
+| -------------------------------------------------------------------------------------------------------------------------- |
+
+| ![Mobile Empty List](https://github.com/ishantbhurani/flutter-todo-app/assets/67356291/b6a4085f-aca4-4e8a-a488-c719df4f60c0) |
+| ---------------------------------------------------------------------------------------------------------------------------- |
+
+| ![Mobile Filter Todos](https://github.com/ishantbhurani/flutter-todo-app/assets/67356291/4040fa00-70cf-4c30-9b9b-6f8c81afedb5) |
+| ------------------------------------------------------------------------------------------------------------------------------ |
+
+| ![Mobile Update Todo](https://github.com/ishantbhurani/flutter-todo-app/assets/67356291/37d6927f-5e7c-43c7-bdc8-db9973f55536) |
+| ----------------------------------------------------------------------------------------------------------------------------- |
 
 ## My process
 
