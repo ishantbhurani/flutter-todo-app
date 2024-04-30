@@ -33,17 +33,17 @@ Users should be able to:
 
 ### Screenshots
 
-| ![Mobile Add Todo](https://github.com/ishantbhurani/flutter-todo-app/assets/67356291/10d0fc05-e5d1-4f27-8e16-0f2af7b39e34) |
-| -------------------------------------------------------------------------------------------------------------------------- |
+| <img width="350" src="https://github.com/ishantbhurani/flutter-todo-app/assets/67356291/b6a4085f-aca4-4e8a-a488-c719df4f60c0" alt="Mobile Empty List" /> |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-| ![Mobile Empty List](https://github.com/ishantbhurani/flutter-todo-app/assets/67356291/b6a4085f-aca4-4e8a-a488-c719df4f60c0) |
-| ---------------------------------------------------------------------------------------------------------------------------- |
+| <img width="350" src="https://github.com/ishantbhurani/flutter-todo-app/assets/67356291/10d0fc05-e5d1-4f27-8e16-0f2af7b39e34" alt="Mobile Add Todo" /> |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-| ![Mobile Filter Todos](https://github.com/ishantbhurani/flutter-todo-app/assets/67356291/4040fa00-70cf-4c30-9b9b-6f8c81afedb5) |
-| ------------------------------------------------------------------------------------------------------------------------------ |
+| <img width="350" src="https://github.com/ishantbhurani/flutter-todo-app/assets/67356291/4040fa00-70cf-4c30-9b9b-6f8c81afedb5" alt="Mobile Filter Todos" /> |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-| ![Mobile Update Todo](https://github.com/ishantbhurani/flutter-todo-app/assets/67356291/37d6927f-5e7c-43c7-bdc8-db9973f55536) |
-| ----------------------------------------------------------------------------------------------------------------------------- |
+| <img width="350" src="https://github.com/ishantbhurani/flutter-todo-app/assets/67356291/37d6927f-5e7c-43c7-bdc8-db9973f55536" alt="Mobile Update Todo" /> |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
 ## My process
 
